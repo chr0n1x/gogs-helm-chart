@@ -1,6 +1,6 @@
 ---
 apiVersion: 1.0.0
 name: gogs
-version: 0.0.2
+version: 0.0.3
 description: simple gogs helm chart
 type: application

@@ -2,6 +2,9 @@ deployment:
   replicas: 1
   image: gogs/gogs
   tag: 0.13
+  extraEnvVars:
+    - name: SOCAT_LINK
+      value: "false"
 
 persistence:
   enabled: true

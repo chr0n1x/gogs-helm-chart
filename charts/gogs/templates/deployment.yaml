@@ -25,6 +25,9 @@ spec:
         env:
           - name: SOCAT_LINK
             value: "false"
+        {{- if and (.Values.deployment.extraEnvVars) (gt (len .Values.deployment.extraEnvVars) 0) }}
+{{ .Values.deployment.extraEnvVars | toYaml | indent 10 }}
+        {{- end }}
         volumeMounts:
         - name: gogs-persistent-storage
           mountPath: /data
