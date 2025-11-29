@@ -8,4 +8,4 @@ spec:
   minAvailable: 1
   selector:
     matchLabels:
-      {{- include "gogs.labels" . | indent 4 }}
+      {{- include "gogs.labels" . | indent 6 }}
