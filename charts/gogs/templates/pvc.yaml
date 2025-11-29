@@ -1,0 +1,25 @@
+{{- if .Values.persistence.enabled }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: gogs-pv-claim
+  namespace: {{ .Release.Namespace | default "gogs" }}
+  labels:
+  {{- include "gogs.labels" . | indent 4 }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.persistence.size | default 2 }}
+
+  {{- with .Values.persistence.storageClass }}
+  storageClassName: {{ . }}
+  {{- end }}
+
+  {{- with .Values.persistence.existingVolumeName }}
+  volumeName: {{ . }}
+  {{- end }}
+
+{{- end }}

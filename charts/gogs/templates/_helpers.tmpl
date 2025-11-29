@@ -1,0 +1,8 @@
+{{- define "gogs.labels" }}
+app: gogs
+{{- end }}
+
+
+{{- define "gogs.releaseName" -}}
+{{ .releaseNameOverride | default .Release.Name }}
+{{- end -}}

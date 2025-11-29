@@ -1,0 +1,34 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "gogs.releaseName" . }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  replicas: {{ .Values.deployment.replicas | default 1 }}
+  selector:
+    matchLabels:
+  {{- include "gogs.labels" . | indent 6 }}
+  template:
+    metadata:
+      labels:
+      {{- include "gogs.labels" . | indent 8 }}
+    spec:
+      containers:
+      - name: gogs
+        image: {{ .Values.deployment.image | default "gogs/gogs" -}}:{{- .Values.deployment.tag | default "0.13" }}
+        ports:
+          - containerPort: 22
+            name: ssh
+          - containerPort: 3000
+            name: http
+        env:
+          - name: SOCAT_LINK
+            value: "false"
+        volumeMounts:
+        - name: gogs-persistent-storage
+          mountPath: /data
+      volumes:
+      - name: gogs-persistent-storage
+        persistentVolumeClaim:
+          claimName: gogs-pv-claim
